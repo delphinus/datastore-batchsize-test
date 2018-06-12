@@ -5,9 +5,9 @@ import (
 )
 
 func init() {
-	http.HandleFunc("/", index)
-	http.HandleFunc("/create", create)
-	http.HandleFunc("/calc", calcAverageAge)
+	http.Handle("/", index())
+	http.Handle("/create", create())
+	http.Handle("/calc", calcAverageAge())
 }
 
 func statusResponse(w http.ResponseWriter, status int) {
