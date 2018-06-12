@@ -5,11 +5,13 @@ import (
 	"math/rand"
 
 	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/log"
 )
 
 const (
 	entityNum = 5000
 	maxAge    = 100
+	maxChunk  = 100 // over 500 entities cannot be put at once
 	batchSize = 500
 	kind      = "datastore-batchsize-test.User"
 )
@@ -20,16 +22,19 @@ type User struct {
 }
 
 func createEntities(ctx context.Context) error {
-	keys := make([]*datastore.Key, entityNum)
-	users := make([]*User, entityNum)
-	for i := 0; i < entityNum; i++ {
-		keys[i] = datastore.NewIncompleteKey(ctx, kind, nil)
-		users[i] = &User{
-			Age: int8(rand.Intn(maxAge)),
+	for i := 0; i < entityNum; i += maxChunk {
+		keys := make([]*datastore.Key, maxChunk)
+		users := make([]*User, maxChunk)
+		for j := 0; j < maxChunk; j++ {
+			keys[j] = datastore.NewIncompleteKey(ctx, kind, nil)
+			users[j] = &User{
+				Age: int8(rand.Intn(maxAge)),
+			}
 		}
-	}
-	if _, err := datastore.PutMulti(ctx, keys, users); err != nil {
-		return err
+		if _, err := datastore.PutMulti(ctx, keys, users); err != nil {
+			return err
+		}
+		log.Infof(ctx, "%d entities put", i+maxChunk)
 	}
 	return nil
 }
