@@ -50,7 +50,7 @@ func averageAgeWithBatchSize(ctx context.Context) (float64, error) {
 }
 
 func doQuery(ctx context.Context, q *datastore.Query) (float64, error) {
-	users := make([]*User, entityNum)
+	users := make([]*User, 0, entityNum)
 	if _, err := q.GetAll(ctx, &users); err != nil {
 		return 0, err
 	}
