@@ -15,7 +15,7 @@ func statusResponse(w http.ResponseWriter, status int) {
 	_, _ = w.Write(statusText(status))
 }
 
-var statusTextMap map[int][]byte
+var statusTextMap = make(map[int][]byte)
 
 func statusText(s int) []byte {
 	if b, ok := statusTextMap[s]; ok {
