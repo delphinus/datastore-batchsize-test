@@ -15,10 +15,6 @@ func index() http.Handler {
 
 func create() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
-			statusResponse(w, http.StatusBadRequest)
-			return
-		}
 		ctx := appengine.NewContext(r)
 		if err := createEntities(ctx); err != nil {
 			log.Errorf(ctx, "%v", err)
@@ -31,10 +27,6 @@ func create() http.Handler {
 
 func calcAverageAge() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			statusResponse(w, http.StatusBadRequest)
-			return
-		}
 		var avg float64
 		var err error
 		ctx := appengine.NewContext(r)

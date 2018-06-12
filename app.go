@@ -5,9 +5,19 @@ import (
 )
 
 func init() {
-	http.Handle("/", index())
-	http.Handle("/create", create())
-	http.Handle("/calc", calcAverageAge())
+	http.Handle("/", confirmMethod(http.MethodGet, index()))
+	http.Handle("/create", confirmMethod(http.MethodPost, create()))
+	http.Handle("/calc", confirmMethod(http.MethodGet, calcAverageAge()))
+}
+
+func confirmMethod(m string, h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != m {
+			statusResponse(w, http.StatusMethodNotAllowed)
+			return
+		}
+		h.ServeHTTP(w, r)
+	})
 }
 
 func statusResponse(w http.ResponseWriter, status int) {
