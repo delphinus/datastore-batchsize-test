@@ -23,10 +23,10 @@ curl -X POST 'https://datastore-batchsize-test-dot-example-com.appspot.com/creat
 OK
 
 # calc average for ages (write result in appengine log)
-curl 'https://datastore-batchsize-test-dot-example-com.appspot.com/create'
+curl 'https://datastore-batchsize-test-dot-example-com.appspot.com/calc'
 OK
 
 # and with supplying BatchSize property
-curl 'https://datastore-batchsize-test-dot-example-com.appspot.com/create?batchsize=1'
+curl 'https://datastore-batchsize-test-dot-example-com.appspot.com/calc?batchsize=1'
 OK
 ```
