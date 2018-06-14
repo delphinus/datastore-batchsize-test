@@ -34,5 +34,6 @@ OK
 ### FYI: Add a header to trace in Stackdriver Logging
 
 ```sh
+# See https://cloud.google.com/trace/docs/faq
 curl -H "X-Cloud-Trace-Context: $(uuidgen | sed -e 's/-//g')/0;o=1" 'https://datastore-batchsize-test-dot-example-com.appspot.com/calc'
 ```
