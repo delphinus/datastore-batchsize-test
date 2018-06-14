@@ -22,11 +22,11 @@ OK
 curl -X POST 'https://datastore-batchsize-test-dot-example-com.appspot.com/create'
 OK
 
-# calc average for ages (write result in appengine log)
+# get all entities without BatchSize() (it takes a bit long time)
 curl 'https://datastore-batchsize-test-dot-example-com.appspot.com/calc'
 OK
 
-# and with supplying BatchSize property
+# when with BatchSize(), it finishes faster!
 curl 'https://datastore-batchsize-test-dot-example-com.appspot.com/calc?batchsize=1'
 OK
 ```
